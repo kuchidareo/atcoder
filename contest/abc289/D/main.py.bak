@@ -12,20 +12,21 @@ def main():
     B_l = set(map(int, input().split()))
     X = int(input())
 
-    dp = [False for _ in range(X)]
-    dp[0] = True
-    ans = False
-
-    for i in range(X):
-        if dp[i]:
-            for A in A_l:
-                next_pos = i + A
-                if next_pos < X and next_pos not in B_l:
-                    dp[next_pos] = True
-                elif next_pos == X:
-                    ans = True
-
+    def solve(pos):
+        cans = []
+        for A in A_l:
+            if pos + A == X:
+                return True
+            elif pos + A > X:
+                continue
+            else:
+                if pos + A not in B_l:
+                    if solve(pos + A) == True:
+                        return True
+        return False
+    ans = solve(0)
     print(YES) if ans else print(NO)
+
 
     # Failed to predict input format
     pass
